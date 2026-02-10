@@ -168,6 +168,24 @@ DELETE /admin/appointments/{appointmentId}
 
 PUT    /admin/appointments/{appointmentId}/status
 PUT    /admin/appointments/{appointmentId}/complete
+
+GET    /doctors/{doctorId}
+PUT    /doctors/{doctorId}
+
+GET    /doctors/{doctorId}/slots
+POST   /doctors/{doctorId}/slots
+PUT    /doctors/slots/{slotId}
+DELETE /doctors/slots/{slotId}
+
+GET    /doctors/{doctorId}/appointments
+GET    /doctors/{doctorId}/appointments?date=
+GET    /doctors/{doctorId}/appointments?status=
+
+PUT    /doctors/appointments/{appointmentId}/status
+PUT    /doctors/appointments/{appointmentId}/complete
+
+GET    /doctors/{doctorId}/dashboard   (optional)
+
 ```
 
 ---
