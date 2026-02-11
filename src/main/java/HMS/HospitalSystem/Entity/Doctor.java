@@ -1,9 +1,9 @@
 package HMS.HospitalSystem.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Doctor {
@@ -21,6 +21,10 @@ public class Doctor {
     private String email;
 
     private boolean isActive;
+
+    @OneToMany(mappedBy = "doctor", orphanRemoval = true,fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Slot> slot;
 
     public Doctor(String name, String specialization, Long phone, String email) {
         this.name = name;
@@ -80,6 +84,14 @@ public class Doctor {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public List<Slot> getSlot() {
+        return slot;
+    }
+
+    public void setSlot(List<Slot> slot) {
+        this.slot = slot;
     }
 
     @Override
