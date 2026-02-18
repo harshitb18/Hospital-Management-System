@@ -1,5 +1,6 @@
 package HMS.HospitalSystem.Controller;
 
+import HMS.HospitalSystem.Entity.Appointment;
 import HMS.HospitalSystem.Entity.Doctor;
 import HMS.HospitalSystem.Entity.Patient;
 import HMS.HospitalSystem.Entity.Slot;
@@ -122,4 +123,30 @@ public class AdminController {
         slotService.setStatusOfSlot(slotId,status);
     }
 
+    @PostMapping("/appointments/{patientId}/doctors/{doctorId}")
+    public void createAppointment(@PathVariable int patientId,@PathVariable int doctorId,
+                                  @RequestParam LocalTime startTime){
+        appointmentService.createAppointment(patientId,doctorId,startTime);
+    }
+
+    @GetMapping("/appointments")
+    public List<Appointment> getAppointments(){
+        return appointmentService.getAppointments();
+    }
+
+    @DeleteMapping("/appointments/{appointmentId}")
+    public void deleteAppointment(@PathVariable int appointmentId){
+        appointmentService.deleteById(appointmentId);
+    }
+
+    @PutMapping("/appointments/{appointmentId}")
+    public void updateAppointmentStatus(@PathVariable int appointmentId,
+                                        @RequestParam String status){
+        appointmentService.updateStatus(appointmentId,status);
+    }
+
+    @GetMapping("/appointments/{appointmentId}")
+    public Optional<Appointment> getAppointmentById(@PathVariable int appointmentId){
+        return appointmentService.getById(appointmentId);
+    }
 }
