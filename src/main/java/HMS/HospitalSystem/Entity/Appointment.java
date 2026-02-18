@@ -32,6 +32,28 @@ public class Appointment {
         this.localTime = localTime;
     }
 
+    public Appointment(int patientId, int doctorId,String status, LocalTime localTime) {
+        this.patientId = patientId;
+        this.doctorId = doctorId;
+        this.status = status;
+        this.localTime = localTime;
+    }
+
+    public Appointment(int patientId, int doctorId, int slotId, String status) {
+        this.patientId = patientId;
+        this.doctorId = doctorId;
+        this.slotId = slotId;
+        this.status = status;
+    }
+
+    public Appointment(int patientId,int slotId, String status) {
+        this.patientId = patientId;
+        this.slotId = slotId;
+        this.status = status;
+    }
+
+
+
     public Appointment() {
 
     }

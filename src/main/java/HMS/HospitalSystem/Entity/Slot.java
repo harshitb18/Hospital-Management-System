@@ -35,6 +35,13 @@ public class Slot {
         this.status = status;
     }
 
+    public Slot(int doctorId, LocalTime startTime, LocalTime endTime, String status) {
+        this.doctorId = doctorId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+    }
+
     public Slot() {
 
     }

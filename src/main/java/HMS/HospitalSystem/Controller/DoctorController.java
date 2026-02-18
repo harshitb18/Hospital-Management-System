@@ -54,9 +54,9 @@ public class DoctorController {
     }
 
     @PostMapping("/doctors/{doctorId}/slots")
-    public void addSlot(@PathVariable int doctorId, @RequestParam LocalDate date,
+    public void addSlot(@PathVariable int doctorId,
                         @RequestParam LocalTime startTime, @RequestParam LocalTime endTime){
-        slotService.addSlot(doctorId,date,startTime,endTime);
+        slotService.addSlot(doctorId,startTime,endTime);
     }
 
 

@@ -3,6 +3,7 @@ package HMS.HospitalSystem.Controller;
 import HMS.HospitalSystem.Entity.Doctor;
 import HMS.HospitalSystem.Entity.Patient;
 import HMS.HospitalSystem.Entity.Slot;
+import HMS.HospitalSystem.Service.AppointmentService;
 import HMS.HospitalSystem.Service.DoctorService;
 import HMS.HospitalSystem.Service.PatientService;
 import HMS.HospitalSystem.Service.SlotService;
@@ -20,13 +21,16 @@ public class AdminController {
     private PatientService patientService;
     private DoctorService doctorService;
     private SlotService slotService;
+    private AppointmentService appointmentService;
 
     public AdminController(PatientService patientService,
                            DoctorService doctorService,
-                           SlotService slotService){
+                           SlotService slotService,
+                           AppointmentService appointmentService){
         this.patientService=patientService;
         this.doctorService=doctorService;
         this.slotService=slotService;
+        this.appointmentService=appointmentService;
     }
 
     @GetMapping("/patients")
@@ -79,10 +83,15 @@ public class AdminController {
         doctorService.deleteDoctor(doctorId);
     }
 
+    @GetMapping("/doctors/specializations/{specialization}")
+    public List<Doctor> getDoctorBySpecialization(@PathVariable String specialization){
+        return appointmentService.getDoctorsBySpecialization(specialization);
+    }
+
     @PostMapping("/slots")
-    public void addSlot(@RequestParam int doctorId, @RequestParam LocalDate date,
+    public void addSlot(@RequestParam int doctorId,
                         @RequestParam LocalTime startTime, @RequestParam LocalTime endTime){
-        slotService.addSlot(doctorId,date,startTime,endTime);
+        slotService.addSlot(doctorId,startTime,endTime);
     }
 
     @GetMapping("/slots")

@@ -24,13 +24,13 @@ public class SlotService {
         this.doctorRepository=doctorRepository;
     }
 
-    public void addSlot(int doctorId, LocalDate date, LocalTime startTime,LocalTime endTime){
+    public void addSlot(int doctorId, LocalTime startTime,LocalTime endTime){
 
-        Slot slot=new Slot(doctorId,date,startTime,endTime,"Booked");
+        Slot slot=new Slot(doctorId,startTime,endTime,"Booked");
         Optional<Doctor> doctor=doctorRepository.findById(doctorId);
 
         if(!doctor.orElseThrow().isActive()){
-            throw new RuntimeException("Doctor not available");
+            throw new RuntimeException("Doctor not available for the selected date");
         }
 
         doctor.orElseThrow().getSlot().add(slot);
