@@ -1,6 +1,7 @@
 package HMS.HospitalSystem.Service;
 
 import HMS.HospitalSystem.Entity.Doctor;
+import HMS.HospitalSystem.Entity.Slot;
 import HMS.HospitalSystem.Repository.DoctorRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 public class DoctorService {
 
     private DoctorRepository doctorRepository;
+
 
     public DoctorService(DoctorRepository doctorRepository){
         this.doctorRepository=doctorRepository;
@@ -36,5 +38,7 @@ public class DoctorService {
     public void deleteDoctor(int id){
         doctorRepository.deleteById(id);
     }
+
+
 
 }

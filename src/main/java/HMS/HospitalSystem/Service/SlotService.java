@@ -2,6 +2,7 @@ package HMS.HospitalSystem.Service;
 
 import HMS.HospitalSystem.Entity.Doctor;
 import HMS.HospitalSystem.Entity.Slot;
+import HMS.HospitalSystem.Repository.DoctorRepository;
 import HMS.HospitalSystem.Repository.SlotRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +15,31 @@ import java.util.Optional;
 public class SlotService {
 
     private SlotRepository slotRepository;
-    private DoctorService doctorService;
+    private DoctorRepository doctorRepository;
+
 
     public SlotService(SlotRepository slotRepository,
-                       DoctorService doctorService){
+                       DoctorRepository doctorRepository){
         this.slotRepository=slotRepository;
-        this.doctorService=doctorService;
+        this.doctorRepository=doctorRepository;
     }
 
     public void addSlot(int doctorId, LocalDate date, LocalTime startTime,LocalTime endTime){
 
         Slot slot=new Slot(doctorId,date,startTime,endTime,"Booked");
-        Optional<Doctor> doctor=doctorService.getDoctorById(doctorId);
+        Optional<Doctor> doctor=doctorRepository.findById(doctorId);
 
         if(!doctor.orElseThrow().isActive()){
             throw new RuntimeException("Doctor not available");
         }
 
         doctor.orElseThrow().getSlot().add(slot);
+
         slot.setDoctor(doctor.orElseThrow());
         slotRepository.save(slot);
-        doctorService.updateDoctor(doctorId,doctor.orElseThrow());
+
+        doctor.orElseThrow().setDoctorId(doctorId);
+        doctorRepository.save(doctor.orElseThrow());
     }
 
     public List<Slot> getSlots(){
@@ -52,7 +57,22 @@ public class SlotService {
         slotRepository.save(slot);
     }
 
+    public void updateSlot(Slot slot,int slotId){
+        slot.setSlotId(slotId);
+        slotRepository.save(slot);
+    }
+
     public void deleteSlotById(int slotId){
         slotRepository.deleteById(slotId);
+    }
+
+    public List<Slot> getSlotByDoctor(int doctorId){
+        return slotRepository.findByDoctorId(doctorId);
+    }
+
+    public void setStatusOfSlot(int slotId,String status){
+        Optional<Slot> slot=slotRepository.findById(slotId);
+        slot.orElseThrow().setStatus(status);
+        slotRepository.save(slot.orElseThrow());
     }
 }

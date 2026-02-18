@@ -107,4 +107,10 @@ public class AdminController {
     public void deleteSlotById(@PathVariable int slotId){
         slotService.deleteSlotById(slotId);
     }
+
+    @PostMapping("/slots/status/{slotId}")
+    public void setSlotStatus(@PathVariable int slotId,@RequestParam String status){
+        slotService.setStatusOfSlot(slotId,status);
+    }
+
 }

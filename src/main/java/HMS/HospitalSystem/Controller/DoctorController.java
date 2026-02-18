@@ -1,9 +1,13 @@
 package HMS.HospitalSystem.Controller;
 
 import HMS.HospitalSystem.Entity.Doctor;
+import HMS.HospitalSystem.Entity.Slot;
 import HMS.HospitalSystem.Service.DoctorService;
+import HMS.HospitalSystem.Service.SlotService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +15,12 @@ import java.util.Optional;
 public class DoctorController {
 
     private DoctorService doctorService;
+    private SlotService slotService;
 
-    public DoctorController(DoctorService doctorService){
+    public DoctorController(DoctorService doctorService,
+                            SlotService slotService){
         this.doctorService=doctorService;
+        this.slotService=slotService;
     }
 
     @PostMapping("/doctors")
@@ -39,6 +46,29 @@ public class DoctorController {
     @DeleteMapping("/doctors/{doctorId}")
     public void deleteDoctor(@PathVariable int doctorId){
         doctorService.deleteDoctor(doctorId);
+    }
+
+    @GetMapping("doctors/{doctorId}/slots")
+    public List<Slot> getSlotsByDoctor(@PathVariable int doctorId){
+        return slotService.getSlotByDoctor(doctorId);
+    }
+
+    @PostMapping("/doctors/{doctorId}/slots")
+    public void addSlot(@PathVariable int doctorId, @RequestParam LocalDate date,
+                        @RequestParam LocalTime startTime, @RequestParam LocalTime endTime){
+        slotService.addSlot(doctorId,date,startTime,endTime);
+    }
+
+
+    /*
+    @PutMapping("/doctors/{doctorId}/{slotId}")
+    public void updateSlotByDoctor(@PathVariable int doctorId,@PathVariable int slotId){
+        doctorService.updateSlotByDoctor(doctorId,slotId);
+    }
+*/
+    @PutMapping("/doctors/{doctorId}/slots/status/{slotId}")
+    public void setSlotStatus(@PathVariable int slotId,@RequestParam String status){
+        slotService.setStatusOfSlot(slotId,status);
     }
 
 }
