@@ -1,5 +1,6 @@
 package HMS.HospitalSystem.Controller;
 
+import HMS.HospitalSystem.Entity.Appointment;
 import HMS.HospitalSystem.Entity.Doctor;
 import HMS.HospitalSystem.Entity.Patient;
 import HMS.HospitalSystem.Entity.Slot;
@@ -55,5 +56,16 @@ public class PatientController {
     @GetMapping("/patients/doctors/specializations/{specialization}")
     public List<Doctor> getDoctorBySpecialization(@PathVariable String specialization){
         return appointmentService.getDoctorsBySpecialization(specialization);
+    }
+
+    @PostMapping("/patients/appointments/{patientId}/doctors/{doctorId}")
+    public void createAppointment(@PathVariable int patientId,@PathVariable int doctorId,
+                                  @RequestParam LocalTime startTime){
+        appointmentService.createAppointment(patientId,doctorId,startTime);
+    }
+
+    @GetMapping("/patients/{patientId}/appointments")
+    public List<Appointment> getAppointmentsByPatient(@PathVariable int patientId){
+        return appointmentService.findByPatientId(patientId);
     }
 }

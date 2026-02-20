@@ -55,4 +55,8 @@ public class AppointmentService {
     public Optional<Appointment> getById(int appointmentId){
         return appointmentRepository.findById(appointmentId);
     }
+
+    public List<Appointment> findByPatientId(int patientId){
+        return appointmentRepository.findByPatientId(patientId);
+    }
 }
